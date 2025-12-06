@@ -1,0 +1,53 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Payment Verification - Static QR</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pay & Upload Proof</h1>
+    <p class="lead">Scan the QR code below, make the payment, then upload the transaction screenshot and enter the transaction number.</p>
+
+    <!-- Static QR (replace the src with your real QR image link) -->
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=your-vpa-here" alt="Static QR">
+    </div>
+
+    <!-- Netlify form -->
+    <form id="paymentForm" name="payment-form" method="POST" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field">
+      <!-- Required hidden input for Netlify forms -->
+      <input type="hidden" name="form-name" value="payment-form">
+      <input type="hidden" name="bot-field" id="bot-field">
+
+      <label for="name">Your name (optional)</label>
+      <input id="name" name="name" type="text" placeholder="Full name (optional)">
+
+      <label for="email">Your email (we'll send status here)</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+      <label for="txn">Transaction / UTR Number</label>
+      <input id="txn" name="transaction_id" type="text" placeholder="Enter transaction number" required>
+
+      <label for="screenshot">Upload transaction screenshot (image/pdf)</label>
+      <input id="screenshot" name="screenshot" type="file" accept="image/*,.pdf" required>
+
+      <button type="submit" id="submitBtn">Submit</button>
+    </form>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content">
+      <h2>Thank you!</h2>
+      <p>We will verify the payment and send confirmation within one business day.</p>
+      <button id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>
